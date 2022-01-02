@@ -27,6 +27,10 @@ app.get("/", function (req, res) {
   return res.render("home");
 });
 
+app.get("/authenticate", function (req, res) {
+  return res.render("home");
+});
+
 app.get("/helloworld", function (req, res) {
   // let isThere = contactList.contains({email});
   // if(isThere){
