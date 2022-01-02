@@ -5,6 +5,9 @@ const port = 8000;
 // const Contact = require("./models/contact");
 
 const app = express(); // storing express
+app.set("view engine", "ejs"); //name of view engine
+app.set("views", path.join(__dirname, "views")); //path of views
+app.use(express.urlencoded()); //signifies middleware
 
 // view mein HTML and Css
 app.use(express.urlencoded()); //signifies middleware
@@ -13,18 +16,25 @@ app.use(express.static("assets"));
 
 // to see in what is the request url remove in production
 app.use((req, res, next) => {
-  console.log("requesting for:", req);
+  console.log("requesting for:", req.url);
+  console.log(req.params);
   next();
 });
 
+var contactList = ["prateeksha.@gmail.com", "prateek@gmail.com"];
+
 app.get("/", function (req, res) {
-  res.send("<h1>Cool, working</h1>");
-  // render  = display/load
+  return res.render("home");
 });
 
-app.post("/helloworld", function (req, res) {
-  // console.log(req);
-  return res.send("done", req.body);
+app.get("/helloworld", function (req, res) {
+  // let isThere = contactList.contains({email});
+  // if(isThere){
+  //   return res.render("helloworld", {title:"present Sir"})
+  // } else{
+  //   return res.render("helloworld", {title: "not found"});
+  // }
+  return res.render("helloworld", { title: "Not present" });
 });
 
 app.listen(port, function (err) {

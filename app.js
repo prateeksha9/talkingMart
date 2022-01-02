@@ -2,11 +2,10 @@ const { App } = require("@slack/bolt");
 require("dotenv").config();
 
 const app = new App({
-  token: "xoxb-2919951544608-2881837595367-Q2gadGScrFS8YphR9E4Pl4cK",
-  signingSecret: "cbad69c800b3c3c2e8ceabb6595df855",
+  token: process.env.bot_token,
+  signingSecret: process.env.signing_secret,
   socketMode: true,
-  appToken:
-    "xapp-1-A02SCD45ZMY-2920184927824-31c680c43ed87801d2bddee52a3ffdf1f1bc6dcfbaf13265c0a205872e7cb813",
+  appToken: process.env.app_token,
 });
 
 app.command("/hello", async ({ command, ack, say, event }) => {
@@ -44,16 +43,12 @@ app.command("/hello", async ({ command, ack, say, event }) => {
               emoji: true,
             },
             value: `plain_text_input-action.value`,
-            url: "https://5baf-122-161-66-226.ngrok.io/helloworld",
-            action_id: "button-action",
-            // replace_original: "true",
-            // text: "Thanks for your request, we'll process it and get back to you.",
+            url: "https://talkingmart.herokuapp.com/helloworld",
           },
         },
       ],
     });
     console.log("command");
-    // command(`${html}`);
   } catch (error) {
     console.log("err");
     console.error(error);
@@ -62,7 +57,7 @@ app.command("/hello", async ({ command, ack, say, event }) => {
 });
 
 (async () => {
-  const port = 3000;
+  const port = process.env.PORT || 3000;
   // Start your app
   await app.start(process.env.PORT || port);
   console.log(`⚡️ Slack Bolt app is running on port ${port}!`);
